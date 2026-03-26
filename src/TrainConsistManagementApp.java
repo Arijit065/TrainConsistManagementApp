@@ -1,32 +1,31 @@
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TrainConsistManagementApp {
     public static void main(String[] args) {
-        Set<String> trainFormation = new LinkedHashSet<>();
+        // 1. Create a HashMap to store bogie-capacity info
+        HashMap<String, Integer> bogieCapacities = new HashMap<>();
 
-        System.out.println("--- Train Consist Management: UC5 ---");
+        System.out.println("--- Train Consist Management: UC6 ---");
 
-        // Attach bogies in a specific physical sequence
-        trainFormation.add("Engine");
-        trainFormation.add("Sleeper");
-        trainFormation.add("Cargo");
-        trainFormation.add("Guard");
+        // 2. Insert capacity values using put()
+        bogieCapacities.put("Sleeper", 72);
+        bogieCapacities.put("AC Chair", 56);
+        bogieCapacities.put("First Class", 24);
+        bogieCapacities.put("General", 90);
 
-        System.out.println("Current Formation: " + trainFormation);
-
-        // Attempt to attach a duplicate bogie
-        System.out.println("\nAttempting to attach a duplicate 'Sleeper' bogie...");
-        boolean isAdded = trainFormation.add("Sleeper");
-
-        if (!isAdded) {
-            System.out.println("System Alert: Duplicate bogie detected! Attachment rejected.");
+        // 3. Display the map using entrySet() iteration
+        System.out.println("Bogie Capacity Details:");
+        for (Map.Entry<String, Integer> entry : bogieCapacities.entrySet()) {
+            System.out.println("Bogie Type: " + entry.getKey() + " | Seat Capacity: " + entry.getValue());
         }
 
-        // Display final formation
-        System.out.println("\nFinal Train Formation (Order Maintained):");
-        System.out.println(trainFormation);
+        // 4. Demonstrate fast lookup
+        String searchBogie = "AC Chair";
+        if (bogieCapacities.containsKey(searchBogie)) {
+            System.out.println("\nQuick Lookup: The " + searchBogie + " has " + bogieCapacities.get(searchBogie) + " seats.");
+        }
 
-        System.out.println("\nTotal unique bogies in sequence: " + trainFormation.size());
+        System.out.println("\nTotal Bogie Types Tracked: " + bogieCapacities.size());
     }
 }
