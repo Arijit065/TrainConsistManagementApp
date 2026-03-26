@@ -1,34 +1,32 @@
-import java.util.LinkedList;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class TrainConsistManagementApp {
     public static void main(String[] args) {
-        LinkedList<String> trainConsist = new LinkedList<>();
+        Set<String> trainFormation = new LinkedHashSet<>();
 
-        System.out.println("--- Train Consist Management: UC4 ---");
+        System.out.println("--- Train Consist Management: UC5 ---");
 
-        // Adding bogies to the consist
-        trainConsist.add("Engine");
-        trainConsist.add("Sleeper");
-        trainConsist.add("AC");
-        trainConsist.add("Cargo");
-        trainConsist.add("Guard");
+        // Attach bogies in a specific physical sequence
+        trainFormation.add("Engine");
+        trainFormation.add("Sleeper");
+        trainFormation.add("Cargo");
+        trainFormation.add("Guard");
 
-        System.out.println("Initial Train Formation: " + trainConsist);
+        System.out.println("Current Formation: " + trainFormation);
 
-        // Inserting a Pantry Car at position 2 (index 2)
-        System.out.println("\nInserting 'Pantry Car' at position 2...");
-        trainConsist.add(2, "Pantry Car");
-        System.out.println("Current Formation: " + trainConsist);
+        // Attempt to attach a duplicate bogie
+        System.out.println("\nAttempting to attach a duplicate 'Sleeper' bogie...");
+        boolean isAdded = trainFormation.add("Sleeper");
 
-        // Removing the first and last bogie
-        System.out.println("\nDetaching the first and last bogies...");
-        trainConsist.removeFirst();
-        trainConsist.removeLast();
+        if (!isAdded) {
+            System.out.println("System Alert: Duplicate bogie detected! Attachment rejected.");
+        }
 
-        // Display the final ordered train consist
-        System.out.println("\nFinal Ordered Train Consist:");
-        System.out.println(trainConsist);
+        // Display final formation
+        System.out.println("\nFinal Train Formation (Order Maintained):");
+        System.out.println(trainFormation);
 
-        System.out.println("\nTotal Bogies remaining: " + trainConsist.size());
+        System.out.println("\nTotal unique bogies in sequence: " + trainFormation.size());
     }
 }
