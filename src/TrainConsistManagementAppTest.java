@@ -3,65 +3,42 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TrainConsistManagementAppTest {
 
-    private void bubbleSort(int[] arr) {
-        for (int i = 0; i < arr.length - 1; i++) {
-            for (int j = 0; j < arr.length - 1 - i; j++) {
-                if (arr[j] > arr[j + 1]) {
-                    int temp = arr[j];
-                    arr[j] = arr[j + 1];
-                    arr[j + 1] = temp;
-                }
+    private boolean linearSearch(String[] array, String target) {
+        for (String id : array) {
+            if (id.equals(target)) {
+                return true;
             }
         }
+        return false;
     }
 
     @Test
-    void testSort_BasicSorting() {
-        int[] capacities = {72, 56, 24, 70, 60};
-        int[] expected = {24, 56, 60, 70, 72};
-
-        bubbleSort(capacities);
-
-        assertArrayEquals(expected, capacities);
+    void testSearch_BogieFound() {
+        String[] bogieIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
+        assertTrue(linearSearch(bogieIds, "BG309"));
     }
 
     @Test
-    void testSort_AlreadySortedArray() {
-        int[] capacities = {24, 56, 60, 70, 72};
-        int[] expected = {24, 56, 60, 70, 72};
-
-        bubbleSort(capacities);
-
-        assertArrayEquals(expected, capacities);
+    void testSearch_BogieNotFound() {
+        String[] bogieIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
+        assertFalse(linearSearch(bogieIds, "BG999"));
     }
 
     @Test
-    void testSort_DuplicateValues() {
-        int[] capacities = {72, 56, 56, 24};
-        int[] expected = {24, 56, 56, 72};
-
-        bubbleSort(capacities);
-
-        assertArrayEquals(expected, capacities);
+    void testSearch_FirstElementMatch() {
+        String[] bogieIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
+        assertTrue(linearSearch(bogieIds, "BG101"));
     }
 
     @Test
-    void testSort_SingleElementArray() {
-        int[] capacities = {50};
-        int[] expected = {50};
-
-        bubbleSort(capacities);
-
-        assertArrayEquals(expected, capacities);
+    void testSearch_LastElementMatch() {
+        String[] bogieIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
+        assertTrue(linearSearch(bogieIds, "BG550"));
     }
 
     @Test
-    void testSort_AllEqualValues() {
-        int[] capacities = {40, 40, 40};
-        int[] expected = {40, 40, 40};
-
-        bubbleSort(capacities);
-
-        assertArrayEquals(expected, capacities);
+    void testSearch_SingleElementArray() {
+        String[] bogieIds = {"BG101"};
+        assertTrue(linearSearch(bogieIds, "BG101"));
     }
 }

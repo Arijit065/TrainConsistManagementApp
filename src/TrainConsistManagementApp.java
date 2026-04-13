@@ -1,54 +1,34 @@
 public class TrainConsistManagementApp {
 
-    static class CargoSafetyException extends RuntimeException {
-        public CargoSafetyException(String message) {
-            super(message);
-        }
-    }
-
-    static class GoodsBogie {
-        String shape;
-        String cargo;
-
-        GoodsBogie(String shape) {
-            this.shape = shape;
-        }
-
-        void assignCargo(String newCargo) {
-            try {
-                if (shape.equalsIgnoreCase("Rectangular") && newCargo.equalsIgnoreCase("Petroleum")) {
-                    throw new CargoSafetyException("Unsafe cargo assignment!");
-                }
-                this.cargo = newCargo;
-                System.out.println("Cargo assigned successfully -> " + this.cargo);
-            } catch (CargoSafetyException e) {
-                System.out.println("Error: " + e.getMessage());
-                throw e;
-            } finally {
-                System.out.println("Cargo validation completed for " + shape + " bogie\n");
-            }
-        }
-    }
-
     public static void main(String[] args) {
         System.out.println("=========================================================");
-        System.out.println(" UC15 - Safe Cargo Assignment ");
+        System.out.println(" UC18 - Linear Search for Bogie ID ");
         System.out.println("=========================================================\n");
 
-        GoodsBogie cylindricalBogie = new GoodsBogie("Cylindrical");
-        try {
-            cylindricalBogie.assignCargo("Petroleum");
-        } catch (CargoSafetyException ignored) {
-            // Caught in method, logged, and re-thrown. Handled here to prevent crash.
+        String[] bogieIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
+        String searchId = "BG309";
+
+        System.out.println("Available Bogie IDs:");
+        for (String id : bogieIds) {
+            System.out.println(id);
+        }
+        System.out.println();
+
+        boolean found = false;
+
+        for (String id : bogieIds) {
+            if (id.equals(searchId)) {
+                found = true;
+                break;
+            }
         }
 
-        GoodsBogie rectangularBogie = new GoodsBogie("Rectangular");
-        try {
-            rectangularBogie.assignCargo("Petroleum");
-        } catch (CargoSafetyException ignored) {
-            // Expected failure
+        if (found) {
+            System.out.println("Bogie " + searchId + " found in train consist.");
+        } else {
+            System.out.println("Bogie " + searchId + " not found in train consist.");
         }
 
-        System.out.println("UC15 runtime handling completed...");
+        System.out.println("\nUC18 search completed...");
     }
 }
