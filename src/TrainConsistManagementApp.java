@@ -1,82 +1,46 @@
-<<<<<<< HEAD
-import java.util.HashMap;
-import java.util.Map;
-
-public class TrainConsistManagementApp {
-    public static void main(String[] args) {
-        // 1. Create a HashMap to store bogie-capacity info
-        HashMap<String, Integer> bogieCapacities = new HashMap<>();
-
-        System.out.println("--- Train Consist Management: UC6 ---");
-
-        // 2. Insert capacity values using put()
-        bogieCapacities.put("Sleeper", 72);
-        bogieCapacities.put("AC Chair", 56);
-        bogieCapacities.put("First Class", 24);
-        bogieCapacities.put("General", 90);
-
-        // 3. Display the map using entrySet() iteration
-        System.out.println("Bogie Capacity Details:");
-        for (Map.Entry<String, Integer> entry : bogieCapacities.entrySet()) {
-            System.out.println("Bogie Type: " + entry.getKey() + " | Seat Capacity: " + entry.getValue());
-        }
-
-        // 4. Demonstrate fast lookup
-        String searchBogie = "AC Chair";
-        if (bogieCapacities.containsKey(searchBogie)) {
-            System.out.println("\nQuick Lookup: The " + searchBogie + " has " + bogieCapacities.get(searchBogie) + " seats.");
-        }
-
-        System.out.println("\nTotal Bogie Types Tracked: " + bogieCapacities.size());
-=======
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-
-class Bogie {
-    private String name;
-    private int capacity;
-
-    public Bogie(String name, int capacity) {
-        this.name = name;
-        this.capacity = capacity;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getCapacity() {
-        return capacity;
-    }
-
-    @Override
-    public String toString() {
-        return "Bogie Type: " + name + " | Capacity: " + capacity;
-    }
-}
+import java.util.stream.Collectors;
 
 public class TrainConsistManagementApp {
 
+    static class Bogie {
+        String name;
+        int capacity;
+
+        Bogie(String name, int capacity) {
+            this.name = name;
+            this.capacity = capacity;
+        }
+
+        @Override
+        public String toString() {
+            return name + " -> " + capacity;
+        }
+    }
+
     public static void main(String[] args) {
+        System.out.println("=========================================================");
+        System.out.println(" UC8 - Filter Passenger Bogies Using Streams ");
+        System.out.println("=========================================================\n");
 
-        List<Bogie> passengerBogies = new ArrayList<>();
+        List<Bogie> bogies = new ArrayList<>();
+        bogies.add(new Bogie("Sleeper", 72));
+        bogies.add(new Bogie("AC Chair", 56));
+        bogies.add(new Bogie("First Class", 24));
+        bogies.add(new Bogie("General", 90));
 
-        passengerBogies.add(new Bogie("Sleeper", 72));
-        passengerBogies.add(new Bogie("AC Chair", 56));
-        passengerBogies.add(new Bogie("First Class", 24));
+        System.out.println("All Bogies:");
+        bogies.forEach(System.out::println);
+        System.out.println();
 
-        System.out.println("Before Sorting:");
-        for (Bogie bogie : passengerBogies) {
-            System.out.println(bogie);
-        }
+        List<Bogie> filteredBogies = bogies.stream()
+                .filter(b -> b.capacity > 60)
+                .collect(Collectors.toList());
 
-        passengerBogies.sort(Comparator.comparingInt(Bogie::getCapacity).reversed());
+        System.out.println("Filtered Bogies (Capacity > 60):");
+        filteredBogies.forEach(System.out::println);
 
-        System.out.println("\nAfter Sorting by Capacity (High to Low):");
-        for (Bogie bogie : passengerBogies) {
-            System.out.println(bogie);
-        }
->>>>>>> feature/UC7
+        System.out.println("\nUC8 filtering completed...");
     }
 }
